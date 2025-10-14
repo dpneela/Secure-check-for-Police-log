@@ -24,23 +24,20 @@ To build an SQL based checkpost database with Python powered dashboard for the r
 
 #  Installation 
 1. 📌 Install Python
-Download from 👉 python.org/downloads
+Download from 👉 [python.org/downloads](https://www.python.org/downloads/)
 Install 
 
 2. 💻 Install Visual Studio Code
-Download 👉 VS Code
-During setup, check:
-✅ Add to PATH
-✅ Register Code as editor
+Download 👉 https://code.visualstudio.com/
 
 4. 🐍 Set Up Python Virtual Environment
 python -m venv .venv
 .venv\Scripts\activate.ps1
 
 5. 📦 Install Required Packages
- * pip install pandas
- * pip install pymysql
- * pip install streamlit
+    * pip install pandas
+    * pip install pymysql
+    * pip install streamlit
 
 7. 🚀 Run the Dashboard
  -->streamlit run police.py
