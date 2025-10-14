@@ -1,9 +1,6 @@
 # SecureCheck: A Python-SQL Digital Ledger for Police Post Logs
 To build an SQL based checkpost database with Python powered dashboard for the real time insights and alerts.
 
-# Raw Data 
-  👉 "C:\Traffic Stops\traffic_stops\traffic_stops.xlsx"
-
 # Features
 🧹 Clean Data Processing – Handle missing values using Python
 
