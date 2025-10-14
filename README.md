@@ -51,3 +51,12 @@ python -m venv .venv
 -> Enables real-time analysis of stop trends, officer activity, and demographic patterns using Python and Streamlit.
 
 -> Ensures accuracy with automatic timestamp, error prevention and duplicate prevention.
+
+## Dashboard Review
+![project](https://github.com/user-attachments/assets/49816274-52bf-461b-b7ea-57822691b13e)
+
+![project 1](https://github.com/user-attachments/assets/dc2b81c9-ebcd-451b-8fe3-ea14471d11ef)
+
+![project 2](https://github.com/user-attachments/assets/975d8b93-9534-4ac5-af49-47e183fe2325)
+
+![project 3](https://github.com/user-attachments/assets/3b4d6265-2dc4-4b3e-bc86-e0a16759bed7)
