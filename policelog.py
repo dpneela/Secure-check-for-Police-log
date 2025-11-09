@@ -20,15 +20,16 @@ df.to_excel("cleaned_police_log.xlsx", index=False)
 # ------------------- MySQL Connection -------------------
 def create_connection():
     try:
-        conn = pymysql.connect(
+        connection = pymysql.connect(
             host="localhost",
             user="root",
             password="deepi",   
             database="traffic_stops"
         )
-        return conn
+        connection.autocommit(True)
+        return connection
     except Exception as e:
-        st.error(f" Database connection failed: {e}")
+        st.error(f"Database connection failed: {e}")
         return None
 
 connection = create_connection()
@@ -46,7 +47,6 @@ def fetch_data(query):
         finally:
             connection.close()
     return pd.DataFrame()
-
 
 # -------------------Streamlit -------------------
 st.set_page_config(page_title="SECURECHECK POLICE DASHBOARD", layout="wide")
@@ -107,7 +107,7 @@ mapping_of_query={
          "time of day sees the most traffic stops":"""SELECT HOUR(stop_time) AS hour_of_the_day, COUNT(*) AS traffic_stops FROM  police_post_log GROUP BY hour_of_the_day ORDER BY traffic_stops DESC LIMIT 10;""",
          "average stop duration for different violations":"""SELECT violation,ROUND(AVG(stop_duration), 2) AS avg_duration FROM  police_post_log GROUP BY violation ORDER BY avg_duration DESC;""",
          "stops during the night more likely to lead to arrests":"""select case when hour(str_to_date(stop_time,'%H:%i'))>=18 or hour(str_to_date(stop_time,'%H:%i'))<6 then 'NIGHT'else 'DAY'end as stop_period,count(*) as total_stops,count(case when is_arrested=TRUE then 1 end) as arrests,round(count(case when is_arrested=TRUE then 1 end)/count(*)*100.0,2) as arrest_rate_percent from  police_post_log group by stop_period;""",
-         "violations are most associated with searches or arrests":"""SELECT violation,COUNT(*) AS total_stops,SUM(CASE WHEN search_conducted = 'Yes' OR  1 THEN 1 ELSE 0 END) AS total_searched,SUM(CASE WHEN is_arrested = 'Yes' OR  1 THEN 1 ELSE 0 END) AS total_arrests FROM  policepost_log GROUP BY violation ORDER BY total_searched DESC, total_arrests DESC;""",
+         "violations are most associated with searches or arrests":"""SELECT violation,COUNT(*) AS total_stops,SUM(CASE WHEN search_conducted = 'Yes' OR  1 THEN 1 ELSE 0 END) AS total_searched,SUM(CASE WHEN is_arrested = 'Yes' OR  1 THEN 1 ELSE 0 END) AS total_arrests FROM  police_post_log GROUP BY violation ORDER BY total_searched DESC, total_arrests DESC;""",
          "violations are most common among younger drivers (<25)":""" SELECT violation,COUNT(*) AS count_violation FROM  police_post_log  WHERE driver_age < 25 GROUP BY violation ORDER BY count_violation DESC;""",
          "violation that rarely results in search or arrest":"""SELECT violation,count(case when search_conducted=TRUE then 1 end) as count_of_the_search,count(case when is_arrested=TRUE then 1 end) as count_of_the_arrest,ROUND(SUM(search_conducted) / COUNT(*) * 100, 2) AS search_rate_percent,ROUND(SUM(is_arrested) / COUNT(*) * 100, 2) AS arrest_rate_percent FROM police_post_log GROUP BY violation ORDER BY search_rate_percent ASC, arrest_rate_percent ASC;""",
          "countries report the highest rate of drug-related stops":"""select country_name,count(*) as total_counts,round(count(case when drugs_related_stop=TRUE then 1 end)/count(*)*100.0,2) as drugs_related_stop_rates from police_post_log group by country_name order by drugs_related_stop_rates desc;""",
@@ -121,12 +121,12 @@ mapping_of_query={
          "Top 5 Violations with Highest Arrest Rates":"""SELECT violation,COUNT(*) AS total_stops,SUM(CASE WHEN is_arrested = 1 THEN 1 ELSE 0 END) AS total_arrests,ROUND(SUM(CASE WHEN is_arrested =  1 THEN 1 ELSE 0 END) * 100.0 / COUNT(*), 2) AS arrest_rate FROM  police_post_log GROUP BY violation ORDER BY arrest_rate DESC;""",
     }    
 
-if st.button("Run the query 🛩"):
+if st.button("Run the query "):
     output = fetch_data(mapping_of_query.get(selecting_the_query, "SELECT 1"))
     if not output.empty:
         st.write(output)
     else:
-        st.warning("NO RESULTS FOUND 🔍")
+        st.warning("NO RESULTS FOUND ")
 
 # --- Predict Outcome and Violation ---
 st.header("🔆 Predict the Outcome and Violation")
@@ -170,4 +170,3 @@ if submit:
     {searching}, and {pronoun} received a *{stop_outcome}*.  
     The stop lasted *{stop_duration}* and {drug_txt}.
     """)
-
