@@ -54,6 +54,9 @@ python -m venv .venv
 
 ![project 1](https://github.com/user-attachments/assets/dc2b81c9-ebcd-451b-8fe3-ea14471d11ef)
 
-![project 2](https://github.com/user-attachments/assets/975d8b93-9534-4ac5-af49-47e183fe2325)
+<img width="1868" height="877" alt="project-3" src="https://github.com/user-attachments/assets/c7462076-22c0-4d4b-82d3-157e92237936" />
 
-![project 3](https://github.com/user-attachments/assets/3b4d6265-2dc4-4b3e-bc86-e0a16759bed7)
+<img width="1861" height="924" alt="project-4" src="https://github.com/user-attachments/assets/23a106a0-769e-455e-9c4f-b4575c7013bb" />
+
+
+
